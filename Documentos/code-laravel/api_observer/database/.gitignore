@@ -1,4 +1,0 @@
-*.sqlite*
-echo ".bash_history" >> .gitignore
-echo ".cache/" >> .gitignore
-echo ".config/" >> .gitignore
