@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class MessageUserOther extends Model
+class UserOther extends Model
 {
     protected $table = 'message_other_user';
 

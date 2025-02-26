@@ -26,17 +26,14 @@ class UserController extends Controller
         $request->validated();
 
         $user = User::create($request->all());
-
+            
+        event(new UserEvent($user));
+        
         return response()->json([
             'success' => 'true',
             'message' => 'Usuário criado com sucesso',
             'user' => $user,
-        ], 201);
-        
-        if($user) {
-            
-            return event(new UserEvent($user));
-        }
+        ], 201);   
     }
 
     /**

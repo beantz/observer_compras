@@ -4,6 +4,7 @@ namespace App\Listeners;
 
 use App\Events\UserEvent;
 use App\Models\MessageUser;
+use App\Models\User;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
