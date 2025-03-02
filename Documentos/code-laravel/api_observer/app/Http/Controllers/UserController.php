@@ -49,6 +49,14 @@ class UserController extends Controller
     {
         $user = User::find($id);
 
+        if(!$user) {
+            return response()->json([
+                'success' => false,
+                'message' => "Usuário de id $id não encontrado",
+                'user' => $user,
+            ], 201);
+        }
+
         return response()->json([
             'success' => true,
             'message' => 'Exibindo um único usuário',
@@ -62,6 +70,15 @@ class UserController extends Controller
     public function update(Request $request, string $id)
     {
         $user = User::find($id);
+
+        if(!$user) {
+            return response()->json([
+                'success' => false,
+                'message' => "Usuário de id $id não encontrado",
+                'user' => $user,
+            ], 201);
+        }
+
         $user->update($request->all());
 
         return response()->json([
@@ -76,7 +93,17 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        User::find($id)->delete();
+        $user = User::find($id);
+
+        if(!$user) {
+            return response()->json([
+                'success' => false,
+                'message' => "Usuário de id $id não encontrado",
+                'user' => $user,
+            ], 201);
+        }
+
+        $user->delete();
 
         return response()->json([
             'success' => true,
