@@ -14,7 +14,13 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $users = User::all();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Exibindo todos os usuarios',
+            'users' => $users,
+        ], 201);
     }
 
     /**
@@ -41,7 +47,13 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $user = User::find($id);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Exibindo um único usuário',
+            'user' => $user,
+        ], 201);
     }
 
     /**
@@ -49,7 +61,14 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $user = User::find($id);
+        $user->update($request->all());
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Dado atualizado com sucesso',
+            'userUpdate' => $user,
+        ], 201);
     }
 
     /**
@@ -57,6 +76,11 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        User::find($id)->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Dado deletado com sucesso'
+        ], 201);
     }
 }
