@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\validationItens;
 use App\Models\Items;
 use Illuminate\Http\Request;
 
@@ -21,11 +22,12 @@ class ItemsController extends Controller
         
     }
 
-    public function store(Request $request) {
+    public function store(validationItens $request) {
 
         $item = Items::create($request->all());
 
         //fazer validação
+        $request->validated();
 
         return response()->json([
             'data' => [
