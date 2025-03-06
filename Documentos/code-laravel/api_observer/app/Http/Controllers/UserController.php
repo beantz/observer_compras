@@ -33,6 +33,7 @@ class UserController extends Controller
 
         $user = User::create($request->all());
             
+        //chamando evento que notifca as classes necessarias da criação de um novo usuario
         event(new UserEvent($user));
         
         return response()->json([

@@ -28,5 +28,6 @@ Route::middleware('api')->prefix('/Pedidos')->group( function() {
 
     //inserir itens nos pedidos
     Route::post('/AdicionarItens/{id}', [PedidosItensController::class, 'store'])->name('inserir.itens');
+    Route::put('/AtualizarItens/{id_pedido}/{id_item}', [PedidosItensController::class, 'update'])->name('atualizar.itens');
     Route::delete('/DeletarItens/{id}', [PedidosItensController::class, 'destroy'])->name('deletar.itens');
 });

@@ -24,7 +24,7 @@ class validationPedidosItens extends FormRequest
     public function rules(): array
     {
         return [
-            'itens_id' => 'required|exist:itens'
+            'itens_id' => 'required|exists:itens,id'
         ];
     }
 
@@ -32,7 +32,7 @@ class validationPedidosItens extends FormRequest
         
         return [
             'required' => 'O campo :attribute deve ser preenchido',
-            'itens_id.exist' => 'O item informado não existe'
+            'itens_id.exists' => 'O item informado não existe'
         ];
     }
 

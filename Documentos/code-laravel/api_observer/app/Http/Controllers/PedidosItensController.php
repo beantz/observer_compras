@@ -65,9 +65,29 @@ class PedidosItensController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, PedidosItensController $pedidosItensController)
+    public function update(validationPedidosItens $request, $id_pedido, $id_item)
     {
-        //
+        $pedido = Pedidos::find($id_pedido);
+
+        if(!$pedido) {
+            return response()->json([
+                'data' => [
+                    'success' => false,
+                    'message' => "Item de id: $id_pedido não encontrado",
+                ]
+            ]);
+        }
+
+        //metodo para atualizar um dado na tabelo do relacionamento
+        $pedido->itens()->updateExistingPivot($id_item, ['itens_id' => $request->get('itens_id')]);
+
+        return response()->json([
+            'data' => [
+                'success' => true,
+                'message' => 'Item Atualizado com sucesso',
+                'pedido' => $pedido
+            ]
+        ]);
     }
 
     /**
