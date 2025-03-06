@@ -9,6 +9,6 @@ class Pedidos extends Model
     protected $fillable = ['user_id'];
 
     public function itens() {
-        return $this->belongsToMany('App\Models\Items', 'itens_pedidos');
+        return $this->belongsToMany('App\Models\Items', 'itens_pedidos', 'pedido_id', 'itens_id');
     }
 }

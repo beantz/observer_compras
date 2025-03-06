@@ -3,6 +3,7 @@
 use App\Http\Controllers\ItemsController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PedidosController;
+use App\Http\Controllers\PedidosItensController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,6 +21,12 @@ Route::middleware('api')->prefix('/Items')->group( function() {
 
 Route::middleware('api')->prefix('/Pedidos')->group( function() {
     Route::get('/Realizados', [PedidosController::class, 'index'])->name('todos.pedidos');
-    Route::post('/Criar', [PedidosController::class, 'store'])->name('criar.pedidos');
+    Route::post('/Criar', [PedidosController::class, 'store'])->name('criar.pedido');
+    Route::get('/Visualizar/{id}', [PedidosController::class, 'show'])->name('visualizar.pedido');
+    Route::put('/Atualizar/{id}', [PedidosController::class, 'update'])->name('atualizar.pedido');
+    Route::delete('/Deletar/{id}', [PedidosController::class, 'destroy'])->name('deletar.pedido');
 
+    //inserir itens nos pedidos
+    Route::post('/AdicionarItens/{id}', [PedidosItensController::class, 'store'])->name('inserir.itens');
+    Route::delete('/DeletarItens/{id}', [PedidosItensController::class, 'destroy'])->name('deletar.itens');
 });
