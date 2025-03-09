@@ -2,14 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Repository\PedidosRepository;
 use App\Http\Requests\validationPedidosItens;
-use App\Models\Items;
-use App\Models\Pedidos;
-use App\Models\PedidosItens;
-use Illuminate\Http\Request;
 
 class PedidosItensController extends Controller
 {
+
+    protected $pedidoRepository;
+
+    public function __construct(PedidosRepository $pedidoRepository)
+    {
+        $this->pedidoRepository = $pedidoRepository;
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -34,7 +39,8 @@ class PedidosItensController extends Controller
         //validação
         $request->validated();
 
-        $pedido = Pedidos::find($id);
+        $pedido = $this->pedidoRepository->show($id);
+
         $pedido->itens()->attach($request->get('itens_id'));
 
         return response()->json([
@@ -67,7 +73,7 @@ class PedidosItensController extends Controller
      */
     public function update(validationPedidosItens $request, $id_pedido, $id_item)
     {
-        $pedido = Pedidos::find($id_pedido);
+        $pedido = $this->pedidoRepository->show($id_pedido);
 
         if(!$pedido) {
             return response()->json([
@@ -93,9 +99,9 @@ class PedidosItensController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(PedidosItensController $pedidosItensController, $id_pedido)
+    public function destroy(PedidosItensController $pedidosItensController, $id_pedido, $id_item)
     {
-        $pedido = Pedidos::find($id_pedido);
+        $pedido = $this->pedidoRepository->show($id_pedido);
 
         if(!$pedido) {
             return response()->json([
@@ -106,7 +112,7 @@ class PedidosItensController extends Controller
             ]);
         }
 
-        $pedido->itens()->detach();
+        $pedido->itens()->detach($id_item);
 
         return response()->json([
             'data' => [
