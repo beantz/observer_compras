@@ -2,15 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Repository\PedidosRepository;
 use App\Models\Items;
 use Illuminate\Http\Request;
 use App\Models\Pedidos;
 
 class PedidosController extends Controller
 {
+    protected $pedidosRepository;
+
+    public function __construct(PedidosRepository $pedidosRepository)
+    {
+        $this->pedidosRepository = $pedidosRepository;
+    }
+
     public function index() {
         
-        $pedidos = Pedidos::all();
+        $pedidos = $this->pedidosRepository->index();
 
         return response()->json([
             'data' => [
@@ -23,7 +31,7 @@ class PedidosController extends Controller
 
     public function store(Request $request) {
         
-        $pedido = Pedidos::create($request->all());
+        $pedido = $this->pedidosRepository->store($request);
 
         return response()->json([
             'data' => [
@@ -36,7 +44,7 @@ class PedidosController extends Controller
 
     public function show($id) {
         
-        $pedido = Pedidos::find($id);
+        $pedido = $this->pedidosRepository->show($id);
 
         if(!$pedido) {
             return response()->json([
@@ -59,7 +67,7 @@ class PedidosController extends Controller
 
     public function update(Request $request, $id) {
 
-        $pedido = Pedidos::find($id);
+        $pedido = $this->pedidosRepository->show($id);
 
         if(!$pedido) {
             return response()->json([
@@ -85,7 +93,7 @@ class PedidosController extends Controller
 
     public function destroy($id) {
 
-        $pedido = Pedidos::find($id);
+        $pedido = $this->pedidosRepository->show($id);
 
         if(!$pedido) {
 

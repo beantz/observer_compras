@@ -2,15 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Repository\ItemsRepository;
 use App\Http\Requests\validationItens;
-use App\Models\Items;
 use Illuminate\Http\Request;
 
 class ItemsController extends Controller
 {
+    protected $itemsRepository;
+
+    public function __construct(ItemsRepository $itemsRepository)
+    {
+        $this->itemsRepository = $itemsRepository;
+    }
+
     public function index() {
 
-        $itens = Items::all();
+        $itens = $this->itemsRepository->index();
 
         return response()->json([
             'data' => [
@@ -24,7 +31,7 @@ class ItemsController extends Controller
 
     public function store(validationItens $request) {
 
-        $item = Items::create($request->all());
+        $item = $this->itemsRepository->store($request);
 
         //fazer validação
         $request->validated();
@@ -41,7 +48,7 @@ class ItemsController extends Controller
 
     public function show($id) {
 
-        $item = Items::find($id);
+        $item = $this->itemsRepository->show($id);
 
         if(!$item) {
 
@@ -67,7 +74,7 @@ class ItemsController extends Controller
 
     public function update(Request $request, $id) {
 
-        $item = Items::find($id);
+        $item = $this->itemsRepository->show($id);
 
         if(!$item) {
 
@@ -95,7 +102,7 @@ class ItemsController extends Controller
 
     public function destroy($id) {
 
-        $item = Items::find($id);
+        $item = $this->itemsRepository->show($id);
 
         if(!$item) {
 

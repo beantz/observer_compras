@@ -3,18 +3,25 @@
 namespace App\Http\Controllers;
 
 use App\Events\UserEvent;
+use App\Http\Repository\UserRepository;
 use App\Http\Requests\validationForm;
-use App\Models\User;
 use Illuminate\Http\Request;
 
-class UserController extends Controller
+class UserController extends Controller 
 {
+    protected $userRepository;
+
+    public function __construct(UserRepository $userRepository)
+    {
+        $this->userRepository = $userRepository;
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $users = User::all();
+        $users = $this->userRepository->index();
 
         return response()->json([
             'success' => true,
@@ -28,10 +35,7 @@ class UserController extends Controller
      */
     public function store(validationForm $request)
     {
-        //validações
-        $request->validated();
-
-        $user = User::create($request->all());
+        $user = $this->userRepository->store($request);
             
         //chamando evento que notifca as classes necessarias da criação de um novo usuario
         event(new UserEvent($user));
@@ -40,7 +44,7 @@ class UserController extends Controller
             'success' => 'true',
             'message' => 'Usuário criado com sucesso',
             'user' => $user,
-        ], 201);   
+        ], 201);
     }
 
     /**
@@ -48,7 +52,7 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        $user = User::find($id);
+        $user = $this->userRepository->show($id);
 
         if(!$user) {
             return response()->json([
@@ -70,7 +74,7 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $user = User::find($id);
+        $user = $this->userRepository->show($id);
 
         if(!$user) {
             return response()->json([
@@ -94,7 +98,7 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        $user = User::find($id);
+        $user = $this->userRepository->show($id);
 
         if(!$user) {
             return response()->json([
