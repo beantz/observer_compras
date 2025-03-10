@@ -6,6 +6,7 @@ use App\Events\UserEvent;
 use App\Http\Repository\UserRepository;
 use App\Http\Requests\validationForm;
 use Illuminate\Http\Request;
+use App\Http\Controllers\logingUserController;
 
 class UserController extends Controller 
 {
@@ -40,11 +41,16 @@ class UserController extends Controller
         //chamando evento que notifca as classes necessarias da criação de um novo usuario
         event(new UserEvent($user));
         
+        //fazendo uso do singleton apenas para testes, aq no caso ele está registrando todos os cadastros de usuarios feitos
+        $log = app(logingUserController::class);
+        $message = $log->message("Usuário $user->name logado com sucesso!");
+
         return response()->json([
             'success' => 'true',
-            'message' => 'Usuário criado com sucesso',
+            'message' => $message,
             'user' => $user,
         ], 201);
+
     }
 
     /**
