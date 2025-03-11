@@ -3,6 +3,7 @@
 namespace App\Http\Repository;
 
 use App\Http\Interfaces\PedidosRepositoryInterface;
+use App\Http\Requests\validationPedidos;
 use Illuminate\Http\Request;
 use App\Models\Pedidos;
 
@@ -16,9 +17,10 @@ class PedidosRepository implements PedidosRepositoryInterface {
 
     }
 
-    public function store(Request $request){
+    public function store(validationPedidos $request){
 
         //fazer validação de pedidos
+        $request->validated();
 
         $pedido = Pedidos::create($request->all());
 

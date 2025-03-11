@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Repository\PedidosRepository;
+use App\Http\Requests\validationPedidos;
 use App\Models\Items;
 use Illuminate\Http\Request;
 use App\Models\Pedidos;
@@ -29,7 +30,7 @@ class PedidosController extends Controller
         ]);
     }
 
-    public function store(Request $request) {
+    public function store(validationPedidos $request) {
         
         $pedido = $this->pedidosRepository->store($request);
 
@@ -40,6 +41,7 @@ class PedidosController extends Controller
                 'pedido' => $pedido
             ]
         ]);
+
     }
 
     public function show($id) {
