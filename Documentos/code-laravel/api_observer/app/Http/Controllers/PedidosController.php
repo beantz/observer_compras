@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\notifyEmail;
 use App\Http\Repository\PedidosRepository;
 use App\Http\Requests\validationPedidos;
-use App\Models\Items;
 use Illuminate\Http\Request;
-use App\Models\Pedidos;
 
 class PedidosController extends Controller
 {
@@ -33,6 +32,9 @@ class PedidosController extends Controller
     public function store(validationPedidos $request) {
         
         $pedido = $this->pedidosRepository->store($request);
+
+        //chamar observer para o envio de e-mails após pedido concluido
+        event(new notifyEmail($pedido));
 
         return response()->json([
             'data' => [

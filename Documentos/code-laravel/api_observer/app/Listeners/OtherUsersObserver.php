@@ -3,10 +3,7 @@
 namespace App\Listeners;
 
 use App\Events\UserEvent;
-use App\Models\MessageUserOther;
 use App\Models\UserOther;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 
 class OtherUsersObserver
 {
