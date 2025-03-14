@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Models\Pedido;
 use App\Models\Pedidos;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -14,12 +15,13 @@ class PedidoConfirmado extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public $pedido;
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public function __construct(Pedidos $pedido)
     {
-        
+        $this->pedido = $pedido;
     }
 
     /**
@@ -39,6 +41,7 @@ class PedidoConfirmado extends Mailable
     {
         return new Content(
             view: 'emails.pedido_confirmado',
+            with: ['pedido' => $this->pedido]
         );
     }
 
