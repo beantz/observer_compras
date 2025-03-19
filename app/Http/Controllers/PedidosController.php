@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Adapter\EmailAdapter;
 use App\Events\notifyEmail;
 use App\Http\Repository\PedidosRepository;
 use App\Http\Requests\validationPedidos;
@@ -10,10 +11,12 @@ use Illuminate\Http\Request;
 class PedidosController extends Controller
 {
     protected $pedidosRepository;
+    protected $emailAdapter;
 
-    public function __construct(PedidosRepository $pedidosRepository)
+    public function __construct(PedidosRepository $pedidosRepository, EmailAdapter $emailAdapter)
     {
         $this->pedidosRepository = $pedidosRepository;
+        $this->emailAdapter = $emailAdapter;
     }
 
     public function index() {
@@ -34,7 +37,7 @@ class PedidosController extends Controller
         $pedido = $this->pedidosRepository->store($request);
 
         //chamar observer para o envio de e-mails após pedido concluido
-        event(new notifyEmail($pedido));
+        event(new notifyEmail($pedido, $this->emailAdapter));
 
         return response()->json([
             'data' => [

@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Adapter\EmailAdapter;
 use App\Http\Interfaces\itemsRepositoryInterface;
 use App\Http\Interfaces\PedidosRepositoryInterface;
 use App\Http\Interfaces\UserRepositoryInterface;
@@ -26,6 +27,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
         $this->app->bind(PedidosRepositoryInterface::class, PedidosRepository::class);
         $this->app->bind(itemsRepositoryInterface::class, ItemsRepository::class);
+        $this->app->bind(EmailAdapter::class);
     }
 
     /**

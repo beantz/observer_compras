@@ -2,7 +2,6 @@
 
 namespace App;
 
-interface pedidosAdapterInterface
-{
-    public function adapterData($data);
+interface pedidosAdapterInterface {
+    public function adapterData($nameData, $event);
 }

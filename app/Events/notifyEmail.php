@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Adapter\EmailAdapter;
 use App\Models\Pedidos;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PrivateChannel;
@@ -13,12 +14,14 @@ class notifyEmail
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $pedido;
+    public $emailAdapter;
     /**
      * Create a new event instance.
      */
-    public function __construct(Pedidos $pedido)
+    public function __construct(Pedidos $pedido, EmailAdapter $emailAdapter)
     {
         $this->pedido = $pedido;
+        $this->emailAdapter = $emailAdapter;
     }
 
     /**

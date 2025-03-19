@@ -2,23 +2,24 @@
 
 namespace App\Listeners;
 
+use App\Adapter\EmailAdapter;
 use App\Events\notifyEmail;
 use App\Mail\PedidoConfirmado;
-use App\Models\Pedido;
 use App\Models\Pedidos;
-use Illuminate\Mail\Mailable;
 use Illuminate\Support\Facades\Mail;
 
 class FinanceiroNotify
 {
 
     public $pedido;
+    public $emailAdapter;
     /**
-     * Create the event listener.
+     * Create a new event instance.
      */
-    public function __construct(Pedidos $pedido)
+    public function __construct(Pedidos $pedido, EmailAdapter $emailAdapter)
     {
         $this->pedido = $pedido;
+        $this->emailAdapter = $emailAdapter;
     }
 
     /**
@@ -27,6 +28,8 @@ class FinanceiroNotify
     public function handle(notifyEmail $event): void
     {
         //enviando o e-mail para o email especificado
-        Mail::to('financeiro@gmail.com')->send(new PedidoConfirmado($event->pedido));
+        $pedido = $this->emailAdapter->adapterData("financeiro" , $event->pedido);
+
+        Mail::to('financeiro@gmail.com')->send(new PedidoConfirmado($pedido));
     }
 }

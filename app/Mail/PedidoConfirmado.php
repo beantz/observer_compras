@@ -16,11 +16,11 @@ class PedidoConfirmado extends Mailable
 {
     use Queueable, SerializesModels;
 
-    protected Pedidos $pedido;
+    protected $pedido;
     /**
      * Create a new message instance.
      */
-    public function __construct(Pedidos $pedido) {
+    public function __construct($pedido) {
         $this->pedido = $pedido;
     }
 
