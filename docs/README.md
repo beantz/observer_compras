@@ -12,9 +12,9 @@ Projeto criado com o objetivo de fornecer um sistema de gerenciamento de pedidos
 
 ## Stack utilizada
 
-**Back-end:** Laravel, php
-**Autenticação** JWT
-**Banco** MySQL
+**Back-end:** Laravel, Php
+**Autenticação:** JWT 
+**Banco:** MySQL
 
 ## Instalação
 
@@ -29,17 +29,21 @@ Instale as dependências
 ```bash
    composer install
 ```
-    
-Configurar JWT
 
-```bash
-
-```
+Configure as credenciais do banco de dados no arquivo **api_observer/app/.env**
 
 Execute as migration
 ```bash
    php artisan migrate
 ```
+
+## Rotas
+
+  Todas as rotas possuem autenticação, menos a **bash api/login** nela você envia as credenciais de email e password,
+se existirem na tabela Users, sera retornado um json contendo um token, o tipo dele e em quantos segundos irá expirar.
+  Pegue o token, coloque em Authorization no cabeçalho da requisição de qualquer outra rota da api e na frente cole o token,
+assim: **Authorization: Bearer <token>**.
+  A aplicação estará disponível em **http://127.0.0.1:8000**.
 
 ## Deploy
 
@@ -48,7 +52,6 @@ Para fazer o deploy desse projeto rode
 ```bash
    php artisan serve
 ```
-
 
 ## Aprendizados
 

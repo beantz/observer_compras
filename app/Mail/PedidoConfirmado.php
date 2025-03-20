@@ -2,11 +2,7 @@
 
 namespace App\Mail;
 
-use App\Events\notifyEmail;
-use App\Models\Pedido;
-use App\Models\Pedidos;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
