@@ -12,9 +12,9 @@ Projeto criado com o objetivo de fornecer um sistema de gerenciamento de pedidos
 
 ## Stack utilizada
 
-**Back-end:** Laravel, Php
-**Autenticação:** JWT 
-**Banco:** MySQL
+**Back-end:** Laravel, Php  
+**Autenticação:** JWT  
+**Banco:** MySQL  
 
 ## Instalação
 
@@ -39,7 +39,7 @@ Execute as migration
 
 ## Rotas
 
-  Todas as rotas possuem autenticação, menos a **bash api/login** nela você envia as credenciais de email e password,
+  Todas as rotas possuem autenticação, menos a **api/login** nela você envia as credenciais de email e password,
 se existirem na tabela Users, sera retornado um json contendo um token, o tipo dele e em quantos segundos irá expirar.
   Pegue o token, coloque em Authorization no cabeçalho da requisição de qualquer outra rota da api e na frente cole o token,
 assim: **Authorization: Bearer <token>**.
